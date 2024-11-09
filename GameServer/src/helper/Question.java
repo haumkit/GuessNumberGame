@@ -1,0 +1,114 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package helper;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
+/**
+ *
+ * @author admin
+ */
+public class Question {
+    private static int correctAnswer;
+    private static ArrayList<Integer> numbers;
+    private static ArrayList<String> operators;
+    private static int difficulty;
+    
+    private static String buildExpression(ArrayList<Integer> numbers, ArrayList<String> operators) {
+        StringBuilder expression = new StringBuilder();
+        expression.append(numbers.get(0));
+        for (int i = 0; i < difficulty; i++) {
+            expression.append(" ").append(operators.get(i)).append(" ").append(numbers.get(i + 1));
+        }
+        return expression.toString();
+    }
+
+    private static String randomOperation(Random rand) {
+        String[] operations = { "+", "-", "*", "/" };
+        return operations[rand.nextInt(operations.length)];
+    }
+    
+    private static int evaluateExpression(String expression) {
+            String[] tokens = expression.split(" ");
+            int result = Integer.parseInt(tokens[0]);
+            try {
+                for (int i = 1; i < tokens.length; i += 2) {
+                    String operator = tokens[i];
+                    int operand = Integer.parseInt(tokens[i + 1]);
+                    switch (operator) {
+                        case "+":
+                            result += operand;
+                            break;
+                        case "-":
+                            result -= operand;
+                            break;
+                        case "*":
+                            result *= operand;
+                            break;
+                        case "/":
+                            result /= operand;
+                            break;
+                    }
+                }
+            } catch (Exception e) {
+                throw new IllegalArgumentException("Invalid expression format");
+            }
+            return result;
+    }
+    public static String renQuestion(int difficulty) {
+        setDifficulty(difficulty);
+        
+        String msg = "";
+      
+        Random rand = new Random();
+        numbers = new ArrayList<>();
+        operators = new ArrayList<>();
+
+        for (int i = 0; i < 8; i++) {
+            int x = (rand.nextInt(19) + 1);
+            numbers.add(x);
+        }
+        
+        do {
+            operators.clear();
+            for (int i = 0; i < difficulty; i++) {
+                operators.add(randomOperation(rand));
+            }
+            correctAnswer = evaluateExpression(buildExpression(numbers, operators));
+        } while (correctAnswer <= 0 || correctAnswer > 200);
+
+        Collections.shuffle(numbers);
+        for (int i : numbers) {
+            System.out.println(i);
+            msg += i + ";"; 
+        }
+        
+        for(String i : operators){
+            System.out.println(i);
+        }
+        msg += correctAnswer + ";" + difficulty;
+        
+        System.out.println(msg);
+        
+        return msg;
+    }
+    
+    
+//    public static void main(String[] args) {
+//        renQuestion();
+//    }
+
+    public static int getDifficulty() {
+        return difficulty;
+    }
+
+    public static void setDifficulty(int difficulty) {
+        Question.difficulty = difficulty;
+    }
+}
