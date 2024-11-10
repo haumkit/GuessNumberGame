@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 import run.ServerRun;
 import helper.Question;
 import java.sql.SQLException;
+import model.UserModel;
+import controller.UserController;
 
 /**
  *
@@ -114,7 +116,9 @@ public class Client implements Runnable {
                     case "ASK_PLAY_AGAIN":
                         onReceiveAskPlayAgain(received);
                         break;
-                        
+                     case "GET_RANKING":
+                        onReceiveGetRanking(received);
+                        break;
                     case "EXIT":
                         running = false;
                 }
@@ -192,6 +196,21 @@ public class Client implements Runnable {
         // send result
         String msg = "GET_LIST_ONLINE" + ";" + result;
         ServerRun.clientManager.broadcast(msg);
+    }
+    
+    private void onReceiveGetRanking(String received){
+        ArrayList<UserModel> usersList = new UserController().getListRanking();
+        StringBuilder result = new StringBuilder();
+
+        for (UserModel user : usersList) {
+            result.append(";").append(user.getUserName());
+            result.append(";").append(user.getWin());
+            result.append(";").append(user.getDraw());
+            result.append(";").append(user.getLose());
+            result.append(";").append(user.getScore());
+        }
+        sendData("GET_RANKING" + result);
+
     }
     
     private void onReceiveGetInfoUser(String received) {

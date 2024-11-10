@@ -7,6 +7,7 @@ import view.HomeView;
 import view.InfoPlayerView;
 import view.LoginView;
 import view.MessageView;
+import view.RankingView;
 import view.RegisterView;
 
 public class ClientRun {
@@ -15,6 +16,7 @@ public class ClientRun {
         LOGIN,
         REGISTER,
         HOMEVIEW,
+        RANKINGVIEW,
         INFOPLAYER,
         MESSAGEVIEW,
         GAMEVIEW
@@ -25,6 +27,7 @@ public class ClientRun {
     public static LoginView loginView;
     public static RegisterView registerView;
     public static HomeView homeView;
+    public static RankingView rankingView;
     public static GameView gameView;
     public static InfoPlayerView infoPlayerView;
     public static MessageView messageView;
@@ -43,6 +46,7 @@ public class ClientRun {
         loginView = new LoginView();
         registerView = new RegisterView();
         homeView = new HomeView();
+        rankingView = new RankingView();
         infoPlayerView = new InfoPlayerView();
         messageView = new MessageView();
         gameView = new GameView();
@@ -75,6 +79,10 @@ public class ClientRun {
                     messageView = new MessageView();
                     messageView.setVisible(true);
                     break;
+                case RANKINGVIEW:
+                    rankingView = new RankingView();
+                    rankingView.setVisible(true);
+                    break;
                 case GAMEVIEW:
                     gameView = new GameView();
                     gameView.setVisible(true);
@@ -106,6 +114,9 @@ public class ClientRun {
                 case MESSAGEVIEW:
                     messageView.dispose();
                     break;
+                case RANKINGVIEW:
+                    rankingView.dispose();
+                    break;
                 case GAMEVIEW:
                     gameView.dispose();
                     break;
@@ -122,6 +133,7 @@ public class ClientRun {
         homeView.dispose();
         infoPlayerView.dispose();
         messageView.dispose();
+        rankingView.dispose();
         gameView.dispose();
     }
 

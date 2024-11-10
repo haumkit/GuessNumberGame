@@ -186,7 +186,9 @@ public class SocketHandler {
     public void getInfoUser(String username) {
         sendData("GET_INFO_USER;" + username);
     }
-    
+    public void getRanking() {
+        sendData("GET_RANKING");
+    }
     public void checkStatusUser(String username) {
         sendData("CHECK_STATUS_USER;" + username);
     }
@@ -348,7 +350,55 @@ public class SocketHandler {
             JOptionPane.showMessageDialog(ClientRun.loginView, "Have some error!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+    private void onReceiveGetRanking(String received) {
+        String[] splitted = received.split(";");
+        String status = splitted[0];
+        if (status.equals("GET_RANKING")) {
+            // Tạo header cho bảng xếp hạng
+            Vector<String> vheader = new Vector<>();
+            vheader.add("Tên");
+            vheader.add("Thắng");
+            vheader.add("Hòa");
+            vheader.add("Thua");
+            vheader.add("Điểm");
+
+            // Tạo data cho bảng
+            Vector<Vector<Object>> vdata = new Vector<>();
+            int index = 1;  
+
+            // Xử lý dữ liệu cho từng người dùng
+            while (index < splitted.length) {
+                String username = splitted[index++];
+                int wins = Integer.parseInt(splitted[index++]);
+                int draws = Integer.parseInt(splitted[index++]);
+                int losses = Integer.parseInt(splitted[index++]);
+                float score = Float.parseFloat(splitted[index++]);
+
+                // Bỏ qua người dùng hiện tại (người dùng đang đăng nhập)
+                Vector<Object> vrow = new Vector<>();
+                vrow.add(username);  // Thêm tên người dùng
+                vrow.add(wins);      // Thêm số trận thắng
+                vrow.add(draws);     // Thêm số trận hòa
+                vrow.add(losses);    // Thêm số trận thua
+                vrow.add(score);     // Thêm điểm số
+                vdata.add(vrow);    // Thêm vào danh sách dữ liệu
+                }
+            System.out.println("Ranking Data: " + vdata);
+
+            // Cập nhật danh sách người dùng xếp hạng vào bảng
+            if (!vdata.isEmpty()) {
+                ClientRun.rankingView.setListRanking(vdata, vheader);  // Cập nhật bảng xếp hạng
+            } else {
+                ClientRun.rankingView.resetTblRanking();  // Nếu không có dữ liệu, reset bảng
+            }
+        } else {
+            // Thông báo lỗi nếu có sự cố
+            JOptionPane.showMessageDialog(ClientRun.loginView, "Có lỗi xảy ra!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
+
     private void onReceiveGetInfoUser(String received) {
         // get status from data
         String[] splitted = received.split(";");
@@ -368,11 +418,7 @@ public class SocketHandler {
             ClientRun.infoPlayerView.setInfoUser(userName, userScore, userWin, userDraw, userLose, userAvgCompetitor, userAvgTime, userStatus);
         }
     }
-     private void onReceiveGetRanking(String received){
-        String[] splitted = received.split(";");
-        String status = splitted[1];
-        
-    }
+    
     private void onReceiveLogout(String received) {
         // get status from data
         String[] splitted = received.split(";");

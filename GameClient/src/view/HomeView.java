@@ -155,6 +155,11 @@ public class HomeView extends javax.swing.JFrame {
         });
 
         btnRanking.setText("Ranking");
+        btnRanking.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRankingActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -283,7 +288,13 @@ public class HomeView extends javax.swing.JFrame {
             System.exit(0);
         } 
     }//GEN-LAST:event_btnExitActionPerformed
-    
+
+    private void btnRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRankingActionPerformed
+        ClientRun.socketHandler.getRanking();
+        ClientRun.rankingView.setVisible(true);
+        
+    }//GEN-LAST:event_btnRankingActionPerformed
+
     /**
      * @param args the command line arguments
      */
