@@ -20,7 +20,7 @@ import model.UserModel;
  */
 public class UserController {
     //  SQL
-    private final String INSERT_USER = "INSERT INTO users (username, password, score, win, draw, lose, avgCompetitor, avgTime) VALUES (?, ?, 0, 0, 0, 0, 1000, 0)";
+    private final String INSERT_USER = "INSERT INTO users (username, password, score, win, draw, lose, avgCompetitor, avgTime) VALUES (?, ?, 1000, 0, 0, 0, 0, 0)";
     
     private final String CHECK_USER = "SELECT userId from users WHERE username = ? limit 1";
     

@@ -57,7 +57,7 @@ public class InfoPlayerView extends javax.swing.JFrame {
         infoUserAvgCompetitor = new javax.swing.JTextField();
         infoUserAvgTime = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         jLabel1.setText("Info user");
