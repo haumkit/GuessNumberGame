@@ -117,7 +117,7 @@ public class GameView extends javax.swing.JFrame {
         lbWaiting.setVisible(true);
     }
     
-    public void afterSubmit() {
+public void afterSubmit() {
         panel.setVisible(false);
         btnSubmit.setVisible(false);
         lbWaiting.setVisible(true);

@@ -89,6 +89,9 @@ public class SocketHandler {
                     case "GET_INFO_USER":
                         onReceiveGetInfoUser(received);
                         break;
+                    case "GET_SCORE_USER":
+                        onReceiveGetScoreUser(received);
+                        break;
                     case "ACCEPT_MESSAGE":
                         onReceiveAcceptMessage(received);
                         break;
@@ -186,6 +189,9 @@ public class SocketHandler {
     public void getInfoUser(String username) {
         sendData("GET_INFO_USER;" + username);
     }
+    public void getScoreUser(String username) {
+        sendData("GET_SCORE_USER;" + username);
+    }
     public void getRanking() {
         sendData("GET_RANKING");
     }
@@ -222,9 +228,11 @@ public class SocketHandler {
         chooseDifficulty(diff);
         sendData("START_GAME;" + loginUser + ";" + userInvited + ";" + roomIdPresent + ";" + difficulty);
     }
+    
     public void chooseDifficulty(int diff){
         this.difficulty = diff;
     }
+    
     public void submitResult(String competitor) { 
         String result = ClientRun.gameView.getAnswerField().trim(); // Lấy dữ liệu và xóa khoảng trắng đầu/cuối
 
@@ -235,7 +243,7 @@ public class SocketHandler {
 
         int difficulty = Integer.parseInt(ClientRun.gameView.getDifficulty());
         String regexAnswer = "^\\d+( [\\+\\-\\*/] \\d+){" + difficulty + "}$";
-
+        
         if (result.matches(regexAnswer)) { // Kiểm tra nếu đáp án đúng theo yêu cầu
             ClientRun.gameView.pauseTime();
 
@@ -312,7 +320,7 @@ public class SocketHandler {
             JOptionPane.showMessageDialog(ClientRun.registerView, failedMsg, "Lỗi", JOptionPane.ERROR_MESSAGE);
 
         } else if (status.equals("success")) {
-            JOptionPane.showMessageDialog(ClientRun.registerView, "Register account successfully! Please login!");
+            JOptionPane.showMessageDialog(ClientRun.registerView, "Register successfully! Please login!");
             // chuyển scene
             ClientRun.closeScene(ClientRun.SceneName.REGISTER);
             ClientRun.openScene(ClientRun.SceneName.LOGIN);
@@ -323,7 +331,7 @@ public class SocketHandler {
         // get status from data
         String[] splitted = received.split(";");
         String status = splitted[1];
-
+        
         if (status.equals("success")) {
             int userCount = Integer.parseInt(splitted[2]);
 
@@ -418,7 +426,15 @@ public class SocketHandler {
             ClientRun.infoPlayerView.setInfoUser(userName, userScore, userWin, userDraw, userLose, userAvgCompetitor, userAvgTime, userStatus);
         }
     }
-    
+    private void onReceiveGetScoreUser(String received){
+        String[] splitted = received.split(";");
+        String status = splitted[1];
+        if (status.equals("success")) {
+            float score = Float.parseFloat(splitted[2]);
+            ClientRun.homeView.setUserScore(score);
+        }
+        
+    }
     private void onReceiveLogout(String received) {
         // get status from data
         String[] splitted = received.split(";");
@@ -439,7 +455,7 @@ public class SocketHandler {
         if (status.equals("success")) {
             String userHost = splitted[2];
             String userInvited = splitted[3];
-            if (JOptionPane.showConfirmDialog(ClientRun.homeView, userHost + " want to chat with you?", "Chat?", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_NO_OPTION){
+            if (JOptionPane.showConfirmDialog(ClientRun.homeView, userHost + " muốn chat với bạn?", "Chat?", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_NO_OPTION){
                 ClientRun.openScene(ClientRun.SceneName.MESSAGEVIEW);
                 ClientRun.messageView.setInfoUserChat(userHost);
                 sendData("ACCEPT_MESSAGE;" + userHost + ";" + userInvited);
@@ -472,7 +488,7 @@ public class SocketHandler {
             String userHost = splitted[2];
             String userInvited = splitted[3];
                 
-            JOptionPane.showMessageDialog(ClientRun.homeView, userInvited + " don't want to chat with you!");
+            JOptionPane.showMessageDialog(ClientRun.homeView, userInvited + " không muốn chat với bạn!");
         }
     }
     
@@ -486,7 +502,7 @@ public class SocketHandler {
             String userInvited = splitted[3];
             
             ClientRun.closeScene(ClientRun.SceneName.MESSAGEVIEW);   
-            JOptionPane.showMessageDialog(ClientRun.homeView, userHost + " leave to chat!");
+            JOptionPane.showMessageDialog(ClientRun.homeView, userHost + " thoát đoạn chat!");
         }
     }
     
@@ -515,7 +531,7 @@ public class SocketHandler {
             String userHost = splitted[2];
             String userInvited = splitted[3];
             String roomId = splitted[4];
-            if (JOptionPane.showConfirmDialog(ClientRun.homeView, userHost + " want to play game with you?", "Game?", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_NO_OPTION){
+            if (JOptionPane.showConfirmDialog(ClientRun.homeView, userHost + " muốn chơi game với bạn?", "Game?", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_NO_OPTION){
                 ClientRun.openScene(ClientRun.SceneName.GAMEVIEW);
                 ClientRun.gameView.setInfoPlayer(userHost);
                 roomIdPresent = roomId;
@@ -551,7 +567,7 @@ public class SocketHandler {
             String userHost = splitted[2];
             String userInvited = splitted[3];
                 
-            JOptionPane.showMessageDialog(ClientRun.homeView, userInvited + " don't want to play with you!");
+            JOptionPane.showMessageDialog(ClientRun.homeView, userInvited + " không muốn chơi với bạn!");
         }
     }
     
@@ -566,7 +582,7 @@ public class SocketHandler {
 
             roomIdPresent = null;
             ClientRun.closeScene(ClientRun.SceneName.GAMEVIEW);   
-            JOptionPane.showMessageDialog(ClientRun.homeView, user1 + " leave to game!");
+            JOptionPane.showMessageDialog(ClientRun.homeView, user1 + " thoát game!");
         }
     }
      
@@ -591,7 +607,6 @@ public class SocketHandler {
             String difficulty = splitted[12];
             ClientRun.gameView.setQuestion(num[0], num[1], num[2], num[3], num[4], num[5], num[6], num[7], correctAnswer, difficulty);
             
-            
             ClientRun.gameView.setStartGame(30);
         }
     }
@@ -608,7 +623,7 @@ public class SocketHandler {
         if (status.equals("success")) {
             ClientRun.gameView.setWaitingRoom();
             if (result.equals("DRAW")) {
-                ClientRun.gameView.showAskPlayAgain("The game is draw. Do you want to play continue?");
+                ClientRun.gameView.showAskPlayAgain("Hòa. Bạn có muốn chơi tiếp?");
             } else if (result.equals(loginUser)) {
                 ClientRun.gameView.showAskPlayAgain("Thắng. Bạn có muốn chơi tiếp?");;
             } else {

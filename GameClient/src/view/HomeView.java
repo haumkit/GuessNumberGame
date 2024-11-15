@@ -17,6 +17,8 @@ import run.ClientRun;
  */
 public class HomeView extends javax.swing.JFrame {
     String statusCompetitor = "";
+    float score = 0;
+    String username = "";
     /**
      * Creates new form HomeView
      */
@@ -44,6 +46,7 @@ public class HomeView extends javax.swing.JFrame {
     
     public void setUsername(String username) {
         infoUsername.setText("Hello: " + username);
+        this.username = username;
     }
     
     public void setUserScore(float score) {
@@ -224,16 +227,22 @@ public class HomeView extends javax.swing.JFrame {
     private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayActionPerformed
         int row = tblUser.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(HomeView.this, "You haven't chosen anyone yet! Please select one user." , "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(HomeView.this, "Bạn cần chọn 1 người chơi" , "ERROR", JOptionPane.ERROR_MESSAGE);
         } else {
             String userSelected = String.valueOf(tblUser.getValueAt(row, 0));
             
             // check user online/in game
             ClientRun.socketHandler.checkStatusUser(userSelected);
             switch (statusCompetitor) {
-                case "ONLINE" -> ClientRun.socketHandler.inviteToPlay(userSelected);
-                case "OFFLINE" -> JOptionPane.showMessageDialog(HomeView.this, "This user is offline." , "ERROR", JOptionPane.ERROR_MESSAGE);
-                case "INGAME" -> JOptionPane.showMessageDialog(HomeView.this, "This user is in game." , "ERROR", JOptionPane.ERROR_MESSAGE);
+                case "ONLINE": 
+                    ClientRun.socketHandler.inviteToPlay(userSelected);
+                    break;
+                case "OFFLINE": 
+                    JOptionPane.showMessageDialog(HomeView.this, "Người chơi offline." , "ERROR", JOptionPane.ERROR_MESSAGE);
+                    break;
+                case "INGAME": 
+                    JOptionPane.showMessageDialog(HomeView.this, "Người chơi is in game." , "ERROR", JOptionPane.ERROR_MESSAGE);
+                    break;
             }
         }
     }//GEN-LAST:event_btnPlayActionPerformed
@@ -241,12 +250,12 @@ public class HomeView extends javax.swing.JFrame {
     private void btnMessageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMessageActionPerformed
         int row = tblUser.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(HomeView.this, "You haven't chosen anyone yet! Please select one user." , "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(HomeView.this, "Bạn cần chọn 1 người chơi" , "ERROR", JOptionPane.ERROR_MESSAGE);
         } else {
             String userSelected = String.valueOf(tblUser.getValueAt(row, 0));
             System.out.println(userSelected);
             if (userSelected.equals(ClientRun.socketHandler.getLoginUser())) {
-                JOptionPane.showMessageDialog(HomeView.this, "You can not chat yourself." , "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(HomeView.this, "Bạn không thể chat với chính bạn" , "ERROR", JOptionPane.ERROR_MESSAGE);
             } else {
                ClientRun.socketHandler.inviteToChat(userSelected);
             }
@@ -255,12 +264,13 @@ public class HomeView extends javax.swing.JFrame {
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         // get UserOnline
+        ClientRun.socketHandler.getScoreUser(username);
         ClientRun.socketHandler.getListOnline();
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         JFrame frame = new JFrame("Logout");
-        if (JOptionPane.showConfirmDialog(frame, "Confirm if you want Logout", "Logout", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_NO_OPTION){
+        if (JOptionPane.showConfirmDialog(frame, "Confirm nếu bạn muốn Logout", "Logout", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_NO_OPTION){
             ClientRun.socketHandler.logout();
             
         } 
@@ -269,12 +279,12 @@ public class HomeView extends javax.swing.JFrame {
     private void btnGetInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetInfoActionPerformed
         int row = tblUser.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(HomeView.this, "You haven't chosen anyone yet! Please select one user." , "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(HomeView.this, "Bạn cần chọn 1 người chơi" , "ERROR", JOptionPane.ERROR_MESSAGE);
         } else {
             String userSelected = String.valueOf(tblUser.getValueAt(row, 0));
             System.out.println(userSelected);
             if (userSelected.equals(ClientRun.socketHandler.getLoginUser())) {
-                JOptionPane.showMessageDialog(HomeView.this, "You can not see yourself." , "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(HomeView.this, "Bạn không thể xem chính bạn" , "ERROR", JOptionPane.ERROR_MESSAGE);
             } else {
                ClientRun.socketHandler.getInfoUser(userSelected);
             }

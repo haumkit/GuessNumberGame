@@ -137,22 +137,22 @@ public class Room {
                 client1Win(timeClient1);
                 return client1.getLoginUser();
             } else if (pointClient1 < pointClient2) {
-                client2Win(timeClient2);
-                return client2.getLoginUser();
-            } else {
-                if(timeClient1 < timeClient2){
-                    client1Win(timeClient1);
-                    return client1.getLoginUser();
-                }
-                else if(timeClient1 > timeClient2){
                     client2Win(timeClient2);
                     return client2.getLoginUser();
+                } else {
+                    if(timeClient1 < timeClient2){
+                        client1Win(timeClient1);
+                        return client1.getLoginUser();
                     }
-                    else{
-                        draw();
-                        return "DRAW";
-                    }
-            }
+                    else if(timeClient1 > timeClient2){
+                        client2Win(timeClient2);
+                        return client2.getLoginUser();
+                        }
+                        else{
+                            draw();
+                            return "DRAW";
+                        }
+                }
         }
         return null;
     }
@@ -206,8 +206,6 @@ public class Room {
         user1.setDraw(user1.getDraw() + 1);
         user2.setDraw(user2.getDraw() + 1);
         
-        user1.setScore(user1.getScore()+ 0);
-        user2.setScore(user2.getScore()+ 0);
         
         int totalMatchUser1 = user1.getWin() + user1.getDraw() + user1.getLose();
         int totalMatchUser2 = user2.getWin() + user2.getDraw() + user2.getLose();

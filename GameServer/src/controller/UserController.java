@@ -28,6 +28,8 @@ public class UserController {
     
     private final String GET_INFO_USER = "SELECT username, password, score, win, draw, lose, avgCompetitor, avgTime FROM users WHERE username=?";
     
+    private final String GET_SCORE_USER = "SELECT score FROM users WHERE username=?";
+    
     private final String UPDATE_USER = "UPDATE users SET score = ?, win = ?, draw = ?, lose = ?, avgCompetitor = ?, avgTime = ? WHERE username=?";
     //  Instance
     private final String GET_RANKING_USER = "SELECT username, win, draw, lose, score FROM users";
@@ -147,6 +149,22 @@ public String login(String username, String password) {
                 user.setAvgTime(r.getFloat("avgTime"));
             }
             return "success;" + user.getUserName() + ";" + user.getScore() + ";" + user.getWin() + ";" + user.getDraw() + ";" + user.getLose() + ";" + user.getAvgCompetitor() + ";" + user.getAvgTime() ;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }   
+        return null;
+    }
+    public String getScoreUser(String username){
+        UserModel user = new UserModel();
+        try {
+            PreparedStatement p = con.prepareStatement(GET_SCORE_USER);
+            p.setString(1, username);
+            
+            ResultSet r = p.executeQuery();
+            while(r.next()) {
+                user.setScore(r.getFloat("score"));
+            }
+            return "success;" + user.getScore();
         } catch (SQLException e) {
             e.printStackTrace();
         }   

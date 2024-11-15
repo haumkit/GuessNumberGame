@@ -26,6 +26,9 @@ public class Question {
         for (int i = 0; i < difficulty; i++) {
             expression.append(" ").append(operators.get(i)).append(" ").append(numbers.get(i + 1));
         }
+//        3 4 5
+//        * /
+//        3 * 4 / 5 
         return expression.toString();
     }
 
@@ -81,17 +84,19 @@ public class Question {
                 operators.add(randomOperation(rand));
             }
             correctAnswer = evaluateExpression(buildExpression(numbers, operators));
-        } while (correctAnswer <= 0 || correctAnswer > 200);
+        } while (correctAnswer <= 0 || correctAnswer > 100);
 
         Collections.shuffle(numbers);
+        
         for (int i : numbers) {
             System.out.println(i);
             msg += i + ";"; 
         }
         
-        for(String i : operators){
-            System.out.println(i);
-        }
+//        for(String i : operators){
+//            System.out.println(i);
+//        }
+        
         msg += correctAnswer + ";" + difficulty;
         
         System.out.println(msg);

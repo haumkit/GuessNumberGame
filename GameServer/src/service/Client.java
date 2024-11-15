@@ -69,6 +69,9 @@ public class Client implements Runnable {
                     case "GET_INFO_USER":
                         onReceiveGetInfoUser(received);
                         break;
+                    case "GET_SCORE_USER":
+                        onReceiveGetScoreUser(received);
+                        break;
                     case "LOGOUT":
                         onReceiveLogout();
                         break;  
@@ -234,7 +237,13 @@ public class Client implements Runnable {
         // send result
         sendData("GET_INFO_USER" + ";" + result + ";" + status);
     }
-    
+    private void onReceiveGetScoreUser(String received){
+        String[] splitted = received.split(";");
+        String username = splitted[1];
+        // get info user
+        String result = new UserController().getScoreUser(username);
+        sendData("GET_SCORE_USER" + ";" + result);
+    }
     private void onReceiveLogout() {
         this.loginUser = null;
         // send result
