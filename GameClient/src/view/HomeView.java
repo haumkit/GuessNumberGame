@@ -233,8 +233,10 @@ public class HomeView extends javax.swing.JFrame {
             
             // check user online/in game
             ClientRun.socketHandler.checkStatusUser(userSelected);
+            System.out.println(statusCompetitor);
             switch (statusCompetitor) {
-                case "ONLINE": 
+                case "ONLINE":
+                    System.out.println("Inviting user to play...");  // Debug line
                     ClientRun.socketHandler.inviteToPlay(userSelected);
                     break;
                 case "OFFLINE": 

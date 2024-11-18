@@ -419,7 +419,7 @@ public class Client implements Runnable {
         joinedRoom.startGame();
     } 
     
-    private void onReceiveSubmitResult(String received) throws SQLException {
+    private synchronized void onReceiveSubmitResult(String received) throws SQLException {
         String[] splitted = received.split(";");
         String user1 = splitted[1];
         String user2 = splitted[2];
@@ -430,21 +430,30 @@ public class Client implements Runnable {
         } else if (user1.equals(joinedRoom.getClient2().getLoginUser())) {
             joinedRoom.setResultClient2(received);
         }
+    
         
+        if (joinedRoom.getResultClient1() != null && joinedRoom.getResultClient2() != null) {
+        // Dừng matchTimer khi cả 2 người chơi đã submit
+        if (joinedRoom.matchTimer != null && joinedRoom.matchTimer.getTimer() != null) {
+            joinedRoom.matchTimer.pause(); // Dừng thời gian trận đấu
+            joinedRoom.setTime("00:00");
+        
+            joinedRoom.waitingClientTimer();
+        }
+        
+        }
         while (!joinedRoom.getTime().equals("00:00") && joinedRoom.getTime() != null) {
-            System.out.println(joinedRoom.getTime());
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } 
-        
+        try {
+            Thread.sleep(1000); // Chờ một giây trước khi kiểm tra lại
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
         String data = "RESULT_GAME;success;" + joinedRoom.handleResultClient() 
                 + ";" + joinedRoom.getClient1().getLoginUser() + ";" + joinedRoom.getClient2().getLoginUser() + ";" + joinedRoom.getId();
         System.out.println(data);
         joinedRoom.broadcast(data);
-    } 
+    }
     
     private void onReceiveAskPlayAgain(String received) throws SQLException {
         String[] splitted = received.split(";");

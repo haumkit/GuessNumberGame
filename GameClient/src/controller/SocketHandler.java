@@ -590,6 +590,7 @@ public class SocketHandler {
         // get status from data
         String[] splitted = received.split(";");
         String status = splitted[2];
+        System.out.println(status + "SH");
         ClientRun.homeView.setStatusCompetitor(status);
     }
     

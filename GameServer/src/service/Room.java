@@ -140,18 +140,23 @@ public class Room {
                     client2Win(timeClient2);
                     return client2.getLoginUser();
                 } else {
-                    if(timeClient1 < timeClient2){
-                        client1Win(timeClient1);
-                        return client1.getLoginUser();
+                    if((pointClient1 == 1) && (pointClient2 == 1))
+                        if(timeClient1 < timeClient2){
+                            client1Win(timeClient1);
+                            return client1.getLoginUser();
+                        }
+                        else if(timeClient1 > timeClient2){
+                            client2Win(timeClient2);
+                            return client2.getLoginUser();
+                            }
+                            else{
+                                draw();
+                                return "DRAW";
+                            }
+                    else{
+                        draw();
+                        return "DRAW";      
                     }
-                    else if(timeClient1 > timeClient2){
-                        client2Win(timeClient2);
-                        return client2.getLoginUser();
-                        }
-                        else{
-                            draw();
-                            return "DRAW";
-                        }
                 }
         }
         return null;
@@ -425,6 +430,7 @@ public class Room {
     public void setWaitingTime(String waitingTime) {
         this.waitingTime = waitingTime;
     }
+
     
     
 }
