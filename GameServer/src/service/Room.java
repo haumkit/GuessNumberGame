@@ -218,7 +218,7 @@ public class Room {
     }
 
     public void draw () throws SQLException {
-        result = "DARW";
+        result = "DRAW";
         UserModel user1 = new UserController().getUser(client1.getLoginUser());
         UserModel user2 = new UserController().getUser(client2.getLoginUser());
         
