@@ -32,9 +32,14 @@ public class Question {
         return expression.toString();
     }
 
-    private static String randomOperation(Random rand) {
+    private static String randomOperation(Random rand, int a, int b) {
         String[] operations = { "+", "-", "*", "/" };
-        return operations[rand.nextInt(operations.length)];
+        String op = operations[rand.nextInt(operations.length)];
+    
+        if (op.equals("/") && (a % b != 0)) {
+            return randomOperation(rand, a, b);
+        }
+        return op;
     }
     
     private static int evaluateExpression(String expression) {
@@ -81,7 +86,9 @@ public class Question {
         do {
             operators.clear();
             for (int i = 0; i < difficulty; i++) {
-                operators.add(randomOperation(rand));
+                int a = numbers.get(i);
+                int b = numbers.get(i + 1);
+                operators.add(randomOperation(rand, a, b));
             }
             correctAnswer = evaluateExpression(buildExpression(numbers, operators));
         } while (correctAnswer <= 0 || correctAnswer > 100);

@@ -27,8 +27,8 @@ public class Client implements Runnable {
     Socket s;
     DataInputStream dis;
     DataOutputStream dos;
-
-    String loginUser;
+    boolean isResultProcessed = false;
+    String loginUser, result="";
     Client cCompetitor;
     
 //    ArrayList<Client> clients
@@ -403,6 +403,8 @@ public class Client implements Runnable {
     }
             
     private void onReceiveStartGame(String received) {
+        isResultProcessed = false;
+        result = "";
         String[] splitted = received.split(";");
         String user1 = splitted[1];
         String user2 = splitted[2];
@@ -451,9 +453,15 @@ public class Client implements Runnable {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+         
+        if (isResultProcessed == false) {
+            result = joinedRoom.handleResultClient();
+            isResultProcessed = true;
+        }
         
-        String data = "RESULT_GAME;success;" + joinedRoom.handleResultClient() 
+        String data = "RESULT_GAME;success;" + result 
                 + ";" + joinedRoom.getClient1().getLoginUser() + ";" + joinedRoom.getClient2().getLoginUser() + ";" + joinedRoom.getId();
+        
         System.out.println("Sending data: " + data);
         joinedRoom.broadcast(data);  // Gửi kết quả cho các client
     
@@ -486,7 +494,8 @@ public class Client implements Runnable {
             joinedRoom.broadcast("ASK_PLAY_AGAIN;YES;" + joinedRoom.getClient1().loginUser + ";" + joinedRoom.getClient2().loginUser);
         } else if (result.equals("NO")) {
             joinedRoom.broadcast("ASK_PLAY_AGAIN;NO;");
-            
+            result = null;
+            isResultProcessed = false;
             Room room = ServerRun.roomManager.find(joinedRoom.getId());
             // delete room            
             ServerRun.roomManager.remove(room);

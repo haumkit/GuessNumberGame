@@ -384,12 +384,12 @@ public class SocketHandler {
 
                 // Bỏ qua người dùng hiện tại (người dùng đang đăng nhập)
                 Vector<Object> vrow = new Vector<>();
-                vrow.add(username);  // Thêm tên người dùng
-                vrow.add(wins);      // Thêm số trận thắng
-                vrow.add(draws);     // Thêm số trận hòa
-                vrow.add(losses);    // Thêm số trận thua
-                vrow.add(score);     // Thêm điểm số
-                vdata.add(vrow);    // Thêm vào danh sách dữ liệu
+                vrow.add(username);  
+                vrow.add(wins);      
+                vrow.add(draws);     
+                vrow.add(losses);    
+                vrow.add(score);    
+                vdata.add(vrow);    
                 }
             System.out.println("Ranking Data: " + vdata);
 

@@ -6,14 +6,16 @@
             <file>file:/D:/Dowloads/btlltm-ptit-master%20(1)/BTL-LTM-Nhom8/GameServer/src/controller/UserController.java</file>
             <file>file:/D:/Dowloads/btlltm-ptit-master%20(1)/BTL-LTM-Nhom8/GameServer/src/service/Client.java</file>
             <file>file:/D:/Dowloads/btlltm-ptit-master%20(1)/BTL-LTM-Nhom8/GameServer/src/service/RoomManager.java</file>
+            <file>file:/D:/Dowloads/btlltm-ptit-master%20(1)/BTL-LTM-Nhom8/GameServer/src/connection/db.sql</file>
             <file>file:/D:/Dowloads/btlltm-ptit-master%20(1)/BTL-LTM-Nhom8/GameServer/src/model/UserModel.java</file>
             <file>file:/D:/Dowloads/btlltm-ptit-master%20(1)/BTL-LTM-Nhom8/GameServer/src/run/ServerRun.java</file>
             <file>file:/D:/Dowloads/btlltm-ptit-master%20(1)/BTL-LTM-Nhom8/GameServer/src/helper/Question.java</file>
+            <file>file:/D:/Dowloads/btlltm-ptit-master%20(1)/BTL-LTM-Nhom8/GameServer/src/service/ClientManager.java</file>
+            <file>file:/D:/Dowloads/btlltm-ptit-master%20(1)/BTL-LTM-Nhom8/GameServer/src/helper/CountDownTimer.java</file>
             <file>file:/D:/Dowloads/btlltm-ptit-master%20(1)/BTL-LTM-Nhom8/GameServer/src/view/ServerView.java</file>
             <file>file:/D:/Dowloads/btlltm-ptit-master%20(1)/BTL-LTM-Nhom8/GameServer/src/helper/CustumDateTimeFormatter.java</file>
             <file>file:/D:/Dowloads/btlltm-ptit-master%20(1)/BTL-LTM-Nhom8/GameServer/src/service/Room.java</file>
-            <file>file:/D:/Dowloads/btlltm-ptit-master%20(1)/BTL-LTM-Nhom8/GameServer/src/service/ClientManager.java</file>
-            <file>file:/D:/Dowloads/btlltm-ptit-master%20(1)/BTL-LTM-Nhom8/GameServer/src/helper/CountDownTimer.java</file>
+            <file>file:/D:/Dowloads/btlltm-ptit-master%20(1)/BTL-LTM-Nhom8/GameServer/src/connection/DatabaseConnection.java</file>
         </group>
     </open-files>
 </project-private>

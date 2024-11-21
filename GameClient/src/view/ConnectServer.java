@@ -44,7 +44,7 @@ public class ConnectServer extends javax.swing.JFrame {
 
         txIP.setEditable(false);
         txIP.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txIP.setText("10.20.132.89");
+        txIP.setText("192.168.1.2");
         txIP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txIPActionPerformed(evt);

@@ -15,7 +15,7 @@ public class Room {
     String time = "00:00";
     Client client1 = null, client2 = null;
     ArrayList<Client> clients = new ArrayList<>();
-    
+    String result = null;
     
     boolean gameStarted = false, isResultProcessed = false;
     CountDownTimer matchTimer;
@@ -41,7 +41,6 @@ public class Room {
 
     public void startGame() {
         gameStarted = true;
-        isResultProcessed = false;
         matchTimer = new CountDownTimer(31);
         matchTimer.setTimerCallBack(
             null,
@@ -90,6 +89,8 @@ public class Room {
     
     public void resetRoom() {
         gameStarted = false;
+        result = null;
+        isResultProcessed = false;
         resultClient1 = null;
         resultClient2 = null;
         playAgainC1 = null;
@@ -100,11 +101,11 @@ public class Room {
     
     public synchronized String handleResultClient() throws SQLException {
         
-//        if (isResultProcessed) {
-//            System.out.println("Result already processed.");
-//            return null;  // Tránh xử lý lại nếu kết quả đã được xử lý
-//        }
-//        isResultProcessed = true;
+        if (isResultProcessed) {
+            System.out.println("Result already processed.");
+            return result;  // Tránh xử lý lại nếu kết quả đã được xử lý
+        }
+        isResultProcessed = true;
         int timeClient1 = 0;
         int timeClient2 = 0;
         
@@ -166,7 +167,7 @@ public class Room {
                     }
                 }
         }
-        return null;
+        return result;
     }
     
     public int calculateResult (String received) {
@@ -212,6 +213,7 @@ public class Room {
     }
 
     public void draw () throws SQLException {
+        result = "DARW";
         UserModel user1 = new UserController().getUser(client1.getLoginUser());
         UserModel user2 = new UserController().getUser(client2.getLoginUser());
         
@@ -236,6 +238,7 @@ public class Room {
     }
     
     public void client1Win(int time) throws SQLException {
+        
         UserModel user1 = new UserController().getUser(client1.getLoginUser());
         UserModel user2 = new UserController().getUser(client2.getLoginUser());
         
@@ -264,7 +267,7 @@ public class Room {
 //        float newAvgTime1 = (totalMatchUser1 * user1.getAvgTime() + time) / (totalMatchUser1 + 1);
 //        System.out.println("newAvgTime1: " + newAvgTime1);
 //        user1.setAvgTime(newAvgTime1);
-        
+        result = client1.getLoginUser();
         new UserController().updateUser(user1);
         new UserController().updateUser(user2);
     }
@@ -300,7 +303,7 @@ public class Room {
 //        float newAvgTime2 = (totalMatchUser2 * user2.getAvgTime() + time) / (totalMatchUser2 + 1);
 //        System.out.println("newAvgTime2: " + newAvgTime2);
 //        user2.setAvgTime(newAvgTime2);
-        
+        result = client2.getLoginUser();
         new UserController().updateUser(user1);
         new UserController().updateUser(user2);
     }

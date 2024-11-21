@@ -3,10 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/**
- * Author: nddmanh
- * Created: Oct 18, 2021
- */
 
 CREATE TABLE `btlltm`.`users` (
   `userId` INT NOT NULL AUTO_INCREMENT,
