@@ -82,6 +82,8 @@ public class Room {
     }
     
     public void deleteRoom () {
+        result = null;
+        isResultProcessed = false;
         client1.setJoinedRoom(null);
         client1.setcCompetitor(null);
         client2.setJoinedRoom(null);
@@ -200,6 +202,7 @@ public class Room {
                         result *= operand;
                         break;
                     case "/":
+                        if(result % operand != 0) return 0;
                         result /= operand;
                         break;
                 }
@@ -266,6 +269,8 @@ public class Room {
     }
     
     public String handlePlayAgain () {
+        result = null;
+        isResultProcessed = false;
         if (playAgainC1 == null || playAgainC2 == null) {
             return "NO";
         } else if (playAgainC1.equals("YES") && playAgainC2.equals("YES")) {
