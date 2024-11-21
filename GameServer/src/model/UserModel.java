@@ -8,12 +8,11 @@ public class UserModel implements Serializable {
     private String userName;
     private String password;
     private String status;
-    private float score;
+    private int score;
     private int win;
     private int draw;
     private int lose;
-    private float avgCompetitor;
-    private float avgTime;
+
     
     public UserModel() { }
     
@@ -24,14 +23,14 @@ public class UserModel implements Serializable {
         this.status = status;
     }
     
-    public UserModel(String userName, String password, float score) {
+    public UserModel(String userName, String password, int score) {
     	super();
         this.userName = userName;
         this.password = password;
         this.score = score;
     }
     
-    public UserModel(String userName, String password, String status, float score) {
+    public UserModel(String userName, String password, String status, int score) {
     	super();
         this.userName = userName;
         this.password = password;
@@ -63,11 +62,11 @@ public class UserModel implements Serializable {
         this.status = password;
     }
 
-    public float getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(float score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
@@ -95,21 +94,7 @@ public class UserModel implements Serializable {
         this.lose = lose;
     }
 
-    public float getAvgCompetitor() {
-        return avgCompetitor;
-    }
-
-    public void setAvgCompetitor(float avgCompetitor) {
-        this.avgCompetitor = avgCompetitor;
-    }
-
-    public float getAvgTime() {
-        return avgTime;
-    }
-
-    public void setAvgTime(float avgTime) {
-        this.avgTime = avgTime;
-    }
+    
 
     
 }

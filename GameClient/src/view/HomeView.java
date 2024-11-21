@@ -17,7 +17,7 @@ import run.ClientRun;
  */
 public class HomeView extends javax.swing.JFrame {
     String statusCompetitor = "";
-    float score = 0;
+    int score = 0;
     String username = "";
     /**
      * Creates new form HomeView
@@ -49,7 +49,7 @@ public class HomeView extends javax.swing.JFrame {
         this.username = username;
     }
     
-    public void setUserScore(float score) {
+    public void setUserScore(int score) {
         infoUserScore.setText("Score: " + score);
     }
 

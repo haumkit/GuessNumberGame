@@ -440,12 +440,10 @@ public class Client implements Runnable {
             if (joinedRoom.matchTimer != null && joinedRoom.matchTimer.getTimer() != null) {
                 joinedRoom.matchTimer.pause(); // Dừng thời gian trận đấu
                 joinedRoom.setTime("00:00");
-
                 joinedRoom.waitingClientTimer();
             }
         
         }
-        
         while (!joinedRoom.getTime().equals("00:00") && joinedRoom.getTime() != null) {
             try {
                 Thread.sleep(1000); // Chờ một giây trước khi kiểm tra lại
@@ -454,12 +452,8 @@ public class Client implements Runnable {
             }
         }
          
-        if (isResultProcessed == false) {
-            result = joinedRoom.handleResultClient();
-            isResultProcessed = true;
-        }
         
-        String data = "RESULT_GAME;success;" + result 
+        String data = "RESULT_GAME;success;" + joinedRoom.handleResultClient()
                 + ";" + joinedRoom.getClient1().getLoginUser() + ";" + joinedRoom.getClient2().getLoginUser() + ";" + joinedRoom.getId();
         
         System.out.println("Sending data: " + data);
@@ -488,14 +482,14 @@ public class Client implements Runnable {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
         } 
-        
+        result = null;
+        isResultProcessed = false;
         String result = this.joinedRoom.handlePlayAgain();
         if (result.equals("YES")) {
             joinedRoom.broadcast("ASK_PLAY_AGAIN;YES;" + joinedRoom.getClient1().loginUser + ";" + joinedRoom.getClient2().loginUser);
         } else if (result.equals("NO")) {
             joinedRoom.broadcast("ASK_PLAY_AGAIN;NO;");
-            result = null;
-            isResultProcessed = false;
+            
             Room room = ServerRun.roomManager.find(joinedRoom.getId());
             // delete room            
             ServerRun.roomManager.remove(room);

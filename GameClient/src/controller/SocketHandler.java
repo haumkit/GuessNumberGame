@@ -20,7 +20,7 @@ public class SocketHandler {
 
     String loginUser = null; // lưu tài khoản đăng nhập hiện tại
     String roomIdPresent = null; // lưu room hiện tại
-    float score = 0;
+    int score = 0;
     int difficulty = 0;
     
     Thread listener = null;
@@ -298,7 +298,7 @@ public class SocketHandler {
         } else if (status.equals("success")) {
             // lưu user login
             this.loginUser = splitted[2];
-            this.score = Float.parseFloat(splitted[3]) ;
+            this.score = Integer.parseInt(splitted[3]) ;
             // chuyển scene
             ClientRun.closeScene(ClientRun.SceneName.LOGIN);
             ClientRun.openScene(ClientRun.SceneName.HOMEVIEW);
@@ -380,7 +380,7 @@ public class SocketHandler {
                 int wins = Integer.parseInt(splitted[index++]);
                 int draws = Integer.parseInt(splitted[index++]);
                 int losses = Integer.parseInt(splitted[index++]);
-                float score = Float.parseFloat(splitted[index++]);
+                int score = Integer.parseInt(splitted[index++]);
 
                 // Bỏ qua người dùng hiện tại (người dùng đang đăng nhập)
                 Vector<Object> vrow = new Vector<>();
@@ -418,19 +418,17 @@ public class SocketHandler {
             String userWin =  splitted[4];
             String userDraw =  splitted[5];
             String userLose =  splitted[6];
-            String userAvgCompetitor =  splitted[7];
-            String userAvgTime =  splitted[8];
-            String userStatus = splitted[9];
+            String userStatus = splitted[7];
             
             ClientRun.openScene(ClientRun.SceneName.INFOPLAYER);
-            ClientRun.infoPlayerView.setInfoUser(userName, userScore, userWin, userDraw, userLose, userAvgCompetitor, userAvgTime, userStatus);
+            ClientRun.infoPlayerView.setInfoUser(userName, userScore, userWin, userDraw, userLose, userStatus);
         }
     }
     private void onReceiveGetScoreUser(String received){
         String[] splitted = received.split(";");
         String status = splitted[1];
         if (status.equals("success")) {
-            float score = Float.parseFloat(splitted[2]);
+            int score = Integer.parseInt(splitted[2]);
             ClientRun.homeView.setUserScore(score);
         }
         
@@ -676,11 +674,11 @@ public class SocketHandler {
         this.roomIdPresent = roomIdPresent;
     }
 
-    public float getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(float score) {
+    public void setScore(int score) {
         this.score = score;
     }
     

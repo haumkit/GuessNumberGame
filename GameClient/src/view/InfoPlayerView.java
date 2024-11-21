@@ -18,14 +18,12 @@ public class InfoPlayerView extends javax.swing.JFrame {
         initComponents();
     }
 
-    public void setInfoUser (String username, String score, String win, String draw, String lose, String avgCompetitor, String avgTime, String status) {
+    public void setInfoUser (String username, String score, String win, String draw, String lose, String status) {
         infoUserName.setText(username);
         infoUserScore.setText(score);
         infoUserWin.setText(win);
         infoUserDraw.setText(draw);
         infoUserLose.setText(lose);
-//        infoUserAvgCompetitor.setText(avgCompetitor);
-//        infoUserAvgTime.setText(avgTime + "s");
         infoUserStatus.setText(status);
     }
     

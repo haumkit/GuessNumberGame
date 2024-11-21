@@ -41,6 +41,8 @@ public class Room {
 
     public void startGame() {
         gameStarted = true;
+        result = null;
+        isResultProcessed = false;  
         matchTimer = new CountDownTimer(31);
         matchTimer.setTimerCallBack(
             null,
@@ -103,7 +105,7 @@ public class Room {
         
         if (isResultProcessed) {
             System.out.println("Result already processed.");
-            return result;  // Tránh xử lý lại nếu kết quả đã được xử lý
+            return result;  
         }
         isResultProcessed = true;
         int timeClient1 = 0;
@@ -218,20 +220,7 @@ public class Room {
         UserModel user2 = new UserController().getUser(client2.getLoginUser());
         
         user1.setDraw(user1.getDraw() + 1);
-        user2.setDraw(user2.getDraw() + 1);
-        
-        
-        int totalMatchUser1 = user1.getWin() + user1.getDraw() + user1.getLose();
-        int totalMatchUser2 = user2.getWin() + user2.getDraw() + user2.getLose();
-        
-        //float newAvgCompetitor1 = (totalMatchUser1 * user1.getAvgCompetitor() + user2.getScore()) / (totalMatchUser1 + 1);
-        //float newAvgCompetitor2 = (totalMatchUser2 * user1.getAvgCompetitor() + user1.getScore()) / (totalMatchUser2 + 1);
-        
-//        newAvgCompetitor1 = Math.round(newAvgCompetitor1 * 100) / 100;
-//        newAvgCompetitor2 = Math.round(newAvgCompetitor2 * 100) / 100;
-        
-        //user1.setAvgCompetitor(newAvgCompetitor1);
-        //user2.setAvgCompetitor(newAvgCompetitor2);
+        user2.setDraw(user2.getDraw() + 1);    
         
         new UserController().updateUser(user1);
         new UserController().updateUser(user2);
@@ -242,31 +231,12 @@ public class Room {
         UserModel user1 = new UserController().getUser(client1.getLoginUser());
         UserModel user2 = new UserController().getUser(client2.getLoginUser());
         
-        System.out.println("Client1Win");
-        System.out.println(user1.getUserName() + "diem: " + user1.getScore());
-        System.out.println(user2.getUserName() + "diem: " + user2.getScore());
-        
         user1.setWin(user1.getWin() + 1);
         user2.setLose(user2.getLose() + 1);
         
         user1.setScore(user1.getScore()+ 1);
         user2.setScore(user2.getScore()- 1);
-        System.out.println(user1.getUserName() + " Chien thang");
-        System.out.println(user1.getUserName() + "diem: " + user1.getScore());
-        System.out.println(user2.getUserName() + "diem: " + user2.getScore());
-        
-        //int totalMatchUser1 = user1.getWin() + user1.getDraw() + user1.getLose();
-        //int totalMatchUser2 = user2.getWin() + user2.getDraw() + user2.getLose();
-        
-//        float newAvgCompetitor1 = (totalMatchUser1 * user1.getAvgCompetitor() + user2.getScore()) / (totalMatchUser1 + 1);
-//        float newAvgCompetitor2 = (totalMatchUser2 * user1.getAvgCompetitor() + user1.getScore()) / (totalMatchUser2 + 1);
-//        
-//        user1.setAvgCompetitor(newAvgCompetitor1);
-//        user2.setAvgCompetitor(newAvgCompetitor2);
-//        
-//        float newAvgTime1 = (totalMatchUser1 * user1.getAvgTime() + time) / (totalMatchUser1 + 1);
-//        System.out.println("newAvgTime1: " + newAvgTime1);
-//        user1.setAvgTime(newAvgTime1);
+
         result = client1.getLoginUser();
         new UserController().updateUser(user1);
         new UserController().updateUser(user2);
@@ -276,33 +246,12 @@ public class Room {
         UserModel user1 = new UserController().getUser(client1.getLoginUser());
         UserModel user2 = new UserController().getUser(client2.getLoginUser());
         
-        System.out.println("Client2Win");
-        
-        System.out.println(user1.getUserName() + "diem: " + user1.getScore());
-        System.out.println(user2.getUserName() + "diem: " + user2.getScore());
-        
         user2.setWin(user2.getWin() + 1);
         user1.setLose(user1.getLose() + 1);
         
         user2.setScore(user2.getScore()+ 1);
         user1.setScore(user1.getScore()- 1);
-        
-        System.out.println(user2.getUserName() + " Chien thang");
-        System.out.println(user1.getUserName() + "diem: " + user2.getScore());
-        System.out.println(user2.getUserName() + "diem: " + user1.getScore());
-        
-//        int totalMatchUser1 = user1.getWin() + user1.getDraw() + user1.getLose();
-//        int totalMatchUser2 = user2.getWin() + user2.getDraw() + user2.getLose();
-//        
-//        float newAvgCompetitor1 = (totalMatchUser1 * user1.getAvgCompetitor() + user2.getScore()) / (totalMatchUser1 + 1);
-//        float newAvgCompetitor2 = (totalMatchUser2 * user1.getAvgCompetitor() + user1.getScore()) / (totalMatchUser2 + 1);
-//        
-//        user1.setAvgCompetitor(newAvgCompetitor1);
-//        user2.setAvgCompetitor(newAvgCompetitor2);
-//        
-//        float newAvgTime2 = (totalMatchUser2 * user2.getAvgTime() + time) / (totalMatchUser2 + 1);
-//        System.out.println("newAvgTime2: " + newAvgTime2);
-//        user2.setAvgTime(newAvgTime2);
+
         result = client2.getLoginUser();
         new UserController().updateUser(user1);
         new UserController().updateUser(user2);

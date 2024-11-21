@@ -209,8 +209,8 @@ public class RankingView extends javax.swing.JFrame {
                 Collections.sort(data, new Comparator<Vector<Object>>() {
                 @Override
                     public int compare(Vector<Object> row1, Vector<Object> row2) {
-                        float  a1 = (float) row1.get(4);
-                        float  a2 = (float) row2.get(4);
+                        int  a1 = (int) row1.get(4);
+                        int  a2 = (int) row2.get(4);
                         return Float.compare(a2, a1);
                     }
                 });
